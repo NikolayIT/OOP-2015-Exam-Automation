@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OopExamAutomation.Console
+﻿namespace OopExamAutomation.Console
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        private static string workingDirectory = @"C:\OOP\";
+        private static string solutionsFolder = workingDirectory + @"\solutions\";
+        private static string reportsDirectory = workingDirectory + @"\reports\";
+        private static string outputFile = workingDirectory + @"\results.csv";
+
+        public static void Main()
         {
         }
     }
