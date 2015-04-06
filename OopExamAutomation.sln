@@ -3,8 +3,44 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OopExamAutomation.Engine", "OopExamAutomation.Engine\OopExamAutomation.Engine.csproj", "{E6BD2FB4-467F-4A9E-9797-65F2B0AD400C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Problems", "Problems", "{5598F6A8-22F6-46D3-95D1-A74FD2F1DEE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OopExamAutomation.Problems.Cosmetics", "Problems\OopExamAutomation.Problems.Cosmetics\OopExamAutomation.Problems.Cosmetics.csproj", "{2CC50991-D719-4FAE-9899-7F21B0799349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OopExamAutomation.Problems.ArmyOfCreatures", "Problems\OopExamAutomation.Problems.ArmyOfCreatures\OopExamAutomation.Problems.ArmyOfCreatures.csproj", "{2810B35F-6F9D-41EC-9AA3-2E734B73FE31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OopExamAutomation.Console", "OopExamAutomation.Console\OopExamAutomation.Console.csproj", "{D2D1D64A-6830-4663-8CF9-DC961FBB93CA}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6BD2FB4-467F-4A9E-9797-65F2B0AD400C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6BD2FB4-467F-4A9E-9797-65F2B0AD400C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6BD2FB4-467F-4A9E-9797-65F2B0AD400C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6BD2FB4-467F-4A9E-9797-65F2B0AD400C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC50991-D719-4FAE-9899-7F21B0799349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC50991-D719-4FAE-9899-7F21B0799349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC50991-D719-4FAE-9899-7F21B0799349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC50991-D719-4FAE-9899-7F21B0799349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2810B35F-6F9D-41EC-9AA3-2E734B73FE31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2810B35F-6F9D-41EC-9AA3-2E734B73FE31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2810B35F-6F9D-41EC-9AA3-2E734B73FE31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2810B35F-6F9D-41EC-9AA3-2E734B73FE31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D1D64A-6830-4663-8CF9-DC961FBB93CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D1D64A-6830-4663-8CF9-DC961FBB93CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D1D64A-6830-4663-8CF9-DC961FBB93CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D1D64A-6830-4663-8CF9-DC961FBB93CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CC50991-D719-4FAE-9899-7F21B0799349} = {5598F6A8-22F6-46D3-95D1-A74FD2F1DEE3}
+		{2810B35F-6F9D-41EC-9AA3-2E734B73FE31} = {5598F6A8-22F6-46D3-95D1-A74FD2F1DEE3}
 	EndGlobalSection
 EndGlobal
