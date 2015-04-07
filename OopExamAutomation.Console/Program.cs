@@ -11,26 +11,98 @@
 
     public static class Program
     {
-        private const string CSharpCompilerPath = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe";
+        private const string CSharpCompilerPath = @"C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe";
         private const string MSBuildCompilerPath = @"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe";
 
-        private static string workingDirectory = @"C:\OOP\";
-        private static string solutionsFolder = workingDirectory + @"\solutions\";
-        private static string reportsDirectory = workingDirectory + @"\reports\";
-        private static string outputFile = workingDirectory + @"\results.csv";
+        private const string WorkingDirectory = @"C:\Temp\OOP\Solutions";
+        private const string ReportsDirectory = @"C:\Temp\OOP\Reports";
+        private const string ResultsOutputFile = @"C:\Temp\OOP\Results.csv";
+        private const string ProblemName = @"2. Army of Creatures";
 
         private static IFileCompiler fileCompiler = new DotNetFileCompiler(CSharpCompilerPath, MSBuildCompilerPath);
         private static ITestsProvider testsProvider = new ArmyOfCreaturesTestsProvider();
 
         public static void Main()
         {
+            Directory.CreateDirectory(ReportsDirectory);
+
             IEnumerable<ITest> tests = testsProvider.GetTests();
 
-            var assembly = Assembly.LoadFile(@"C:\Temp\OOP\Solution\ArmyOfCreatures\bin\Debug\ArmyOfCreatures.exe");
+            var directories = Directory.GetDirectories(WorkingDirectory);
+            using (var reportFile = new StreamWriter(ResultsOutputFile))
+            {
+                foreach (var directory in directories)
+                {
+                    var testSolutionResult = TestSolution(directory, tests);
+                    Console.WriteLine(testSolutionResult);
+                    reportFile.WriteLine(testSolutionResult);
+                    reportFile.Flush();
+                }
+            }
+        }
 
-            var totalPoints = RunTests(tests, assembly, Console.Out);
-            Console.WriteLine(totalPoints);
-            // RunTests
+        private static TestSolutionResult TestSolution(string directory, IEnumerable<ITest> tests)
+        {
+            TestSolutionResult result = new TestSolutionResult(new DirectoryInfo(directory).Name);
+
+            var solutionFilePath = Directory.GetFiles(directory).OrderByDescending(fileName => fileName.Length).FirstOrDefault(fileName => fileName.Contains(ProblemName));
+            if (solutionFilePath == null)
+            {
+                result.Points = 0;
+                result.Comment = "Solution file not found!";
+                return result;
+            }
+
+            FileCompileResult compileResult = null;
+            // AppDomain dom = AppDomain.CreateDomain("some");
+            try
+            {
+                using (StreamWriter report = new StreamWriter(string.Format("{0}\\{1} [{2}] [{3}].txt", ReportsDirectory, result.UserName, result.Email, result.StudentsNumber)))
+                {
+                    compileResult = fileCompiler.Compile(solutionFilePath);
+                    if (!compileResult.IsCompiledSuccessfully)
+                    {
+                        report.WriteLine("Compilation failed!");
+                        report.WriteLine(compileResult.CompilerComment);
+                        report.WriteLine();
+
+                        result.Points = 0;
+                        result.Comment = "Compilation failed!";
+                        return result;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(compileResult.CompilerComment))
+                    {
+                        report.WriteLine("Compiler comment:");
+                        report.WriteLine(compileResult.CompilerComment);
+                        report.WriteLine();
+                    }
+
+                    // var assembly = dom.Load(new AssemblyName { CodeBase = compileResult.OutputFile });
+                    var assembly = Assembly.LoadFile(compileResult.OutputFile);
+
+                    var totalPoints = RunTests(tests, assembly, report);
+
+                    result.Comment = string.Empty;
+                    result.Points = totalPoints;
+
+                    return result;
+                }
+            }
+            catch(Exception exception)
+            {
+                result.Points = 0;
+                result.Comment = exception.ToString();
+                return result;
+            }
+            finally
+            {
+                // AppDomain.Unload(dom);
+                // if (compileResult != null && compileResult.OutputFile != null)
+                // {
+                //    File.Delete(compileResult.OutputFile);
+                // }
+            }
         }
 
         private static decimal RunTests(IEnumerable<ITest> tests, Assembly assembly, TextWriter output)
