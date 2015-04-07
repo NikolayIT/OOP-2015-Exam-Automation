@@ -47,6 +47,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OopExamAutomation.Engine\OopExamAutomation.Engine.csproj">
+      <Project>{e6bd2fb4-467f-4a9e-9797-65f2b0ad400c}</Project>
+      <Name>OopExamAutomation.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Problems\OopExamAutomation.Problems.ArmyOfCreatures\OopExamAutomation.Problems.ArmyOfCreatures.csproj">
+      <Project>{2810b35f-6f9d-41ec-9aa3-2e734b73fe31}</Project>
+      <Name>OopExamAutomation.Problems.ArmyOfCreatures</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Problems\OopExamAutomation.Problems.Cosmetics\OopExamAutomation.Problems.Cosmetics.csproj">
+      <Project>{2cc50991-d719-4fae-9899-7f21b0799349}</Project>
+      <Name>OopExamAutomation.Problems.Cosmetics</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
