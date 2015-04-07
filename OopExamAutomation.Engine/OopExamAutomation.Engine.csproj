@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\External Libraries\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="OJS.Common">
+      <HintPath>..\External Libraries\OJS.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="OJS.Workers.Common">
+      <HintPath>..\External Libraries\OJS.Workers.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="OJS.Workers.Compilers">
+      <HintPath>..\External Libraries\OJS.Workers.Compilers.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DotNetFileCompiler.cs" />
+    <Compile Include="FileCompileResult.cs" />
+    <Compile Include="IFileCompiler.cs" />
     <Compile Include="ITest.cs" />
     <Compile Include="ITestsProvider.cs" />
     <Compile Include="PredicateTest.cs" />
