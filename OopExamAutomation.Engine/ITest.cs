@@ -4,6 +4,8 @@
 
     public interface ITest
     {
-        decimal CalculatePoints(Assembly assembly);
+        string Name { get; }
+
+        TestResult CalculateResult(Assembly assembly);
     }
 }

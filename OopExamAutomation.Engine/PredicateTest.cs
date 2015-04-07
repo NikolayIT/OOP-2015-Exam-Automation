@@ -9,22 +9,25 @@
 
         private readonly Func<Assembly, bool> predicate;
 
-        public PredicateTest(decimal maxPoints, Func<Assembly, bool> predicate)
+        public PredicateTest(string name, decimal maxPoints, Func<Assembly, bool> predicate)
         {
+            this.Name = name;
             this.maxPoints = maxPoints;
             this.predicate = predicate;
         }
 
-        public decimal CalculatePoints(Assembly assembly)
+        public TestResult CalculateResult(Assembly assembly)
         {
             if (this.predicate(assembly))
             {
-                return this.maxPoints;
+                return new TestResult(maxPoints, "OK");
             }
             else
             {
-                return 0;
+                return new TestResult(0, "FAIL");
             }
         }
+
+        public string Name { get; private set; }
     }
 }
