@@ -14,6 +14,14 @@
 
             AddGoblinChecks(list);
             AddAncientBehemothChecks(list);
+            AddWolfRaiderChecks(list);
+            AddGriffinChecks(list);
+            AddCyclopsKingChecks(list);
+
+            // TODO: Check DoubleDamage
+            // TODO: Check AddAttackWhenSkip
+            // TODO: Check DoubleAttackWhenAttacking
+            // TODO: Check Working with 3 armies
 
             return list;
         }
@@ -37,6 +45,25 @@
         private void AddAncientBehemothChecks(IList<ITest> list)
         {
             AddBaseCreatureChecks(list, "AncientBehemoth", 19, 19, 300, 40, 2);
+            // TODO: Check specialties
+        }
+
+        private void AddWolfRaiderChecks(IList<ITest> list)
+        {
+            AddBaseCreatureChecks(list, "WolfRaider", 8, 5, 10, 3.5M, 1);
+            // TODO: Check specialties
+        }
+
+        private void AddGriffinChecks(IList<ITest> list)
+        {
+            AddBaseCreatureChecks(list, "Griffin", 8, 8, 25, 4.5M, 3);
+            // TODO: Check specialties
+        }
+
+        private void AddCyclopsKingChecks(IList<ITest> list)
+        {
+            AddBaseCreatureChecks(list, "CyclopsKing", 17, 13, 70, 18, 3);
+            // TODO: Check specialties
         }
     }
 }
