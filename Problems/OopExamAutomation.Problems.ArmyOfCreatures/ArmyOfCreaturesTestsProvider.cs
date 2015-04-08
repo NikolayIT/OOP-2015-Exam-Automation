@@ -32,16 +32,70 @@
         private void AddWorkingWithThreeArmiesChecks(IList<ITest> list)
         {
             // Class exists
-            // AddCreaturesByIdentifier -> creatureIdentifier -> null (5)
-            // AddCreaturesByIdentifier -> creaturesInBattle -> null (5)
-            // creatureIdentifier.ArmyNumber == 3
-            // GetByIdentifier -> identifier -> null (5)
-            // identifier.ArmyNumber == 3
+            list.Add(new PredicateTest("BattleManager is extended", 3M, assembly => assembly.GetTypes().Any(type => type.BaseType != null && type.BaseType.Name == "BattleManager")));
+            
+            // Null checks
+            list.Add(new PredicateTest("In extended BattleManager AddCreaturesByIdentifier throws exception when creatureIdentifier is null", 4M, assembly =>
+            {
+                var instance = CreateBattleManagerObject(assembly);
+                if (instance == null)
+                {
+                    return false;
+                }
+
+                return instance.GetType().MethodThrowsArgumentException(instance, "AddCreaturesByIdentifier", null, CreateCreaturesInBattleObject(assembly));
+            }));
+            list.Add(new PredicateTest("In extended BattleManager AddCreaturesByIdentifier throws exception when creaturesInBattle is null", 4M, assembly =>
+            {
+                var instance = CreateBattleManagerObject(assembly);
+                if (instance == null)
+                {
+                    return false;
+                }
+
+                return instance.GetType().MethodThrowsArgumentException(instance, "AddCreaturesByIdentifier", CreateCreatureIdentifierObject(assembly), null);
+            }));
+            list.Add(new PredicateTest("In extended BattleManager GetByIdentifier throws exception when identifier is null", 4M, assembly =>
+            {
+                var instance = CreateBattleManagerObject(assembly);
+                if (instance == null)
+                {
+                    return false;
+                }
+
+                return instance.GetType().MethodThrowsArgumentException(instance, "GetByIdentifier", new object[] { null });
+            }));
+        }
+
+        private object CreateCreatureIdentifierObject(Assembly assembly, int armyId = 1)
+        {
+            var type = assembly.GetTypeByName("CreatureIdentifier");
+            if (type == null)
+            {
+                return null;
+            }
+
+            return type.GetInstance("Angel", armyId);
+        }
+
+        private object CreateBattleManagerObject(Assembly assembly)
+        {
+            var type = assembly.GetTypes().FirstOrDefault(t => t.BaseType != null && t.BaseType.Name == "BattleManager");
+            if (type == null)
+            {
+                return null;
+            }
+
+            var factory = assembly.GetTypeByName("CreaturesFactory").GetInstance();
+            var logger = assembly.GetTypeByName("ConsoleLogger").GetInstance();
+
+            var instance = type.GetInstance(factory, logger);
+            return instance;
         }
 
         private void AddFactoryChecks(IList<ITest> list)
         {
-            list.Add(new PredicateTest("CreaturesFactory is extended", 2M, assembly => assembly.GetTypes().Any(type => type.BaseType != null && type.BaseType.Name == "CreaturesFactory")));
+            list.Add(new PredicateTest("CreaturesFactory is extended", 3M, assembly => assembly.GetTypes().Any(type => type.BaseType != null && type.BaseType.Name == "CreaturesFactory")));
             list.Add(new PredicateTest("CreaturesFactory CreateCreature throws exception when given invalid data", 2M, assembly =>
             {
                 var type = assembly.GetTypes().FirstOrDefault(t => t.BaseType != null && t.BaseType.Name == "CreaturesFactory");
@@ -87,14 +141,14 @@
             }));
 
             // Validations
-            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given 0 rounds", 1.5M, "DoubleDamage", type => type.ConstructorThrowsException(0)));
-            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given -1 rounds", 1M, "DoubleDamage", type => type.ConstructorThrowsException(-1)));
-            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given 11 rounds", 2M, "DoubleDamage", type => type.ConstructorThrowsException(11)));
+            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given 0 rounds", 2M, "DoubleDamage", type => type.ConstructorThrowsException(0)));
+            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given -1 rounds", 2M, "DoubleDamage", type => type.ConstructorThrowsException(-1)));
+            list.Add(new TypeTest("DoubleDamage constructor throws an exception when given 11 rounds", 4M, "DoubleDamage", type => type.ConstructorThrowsException(11)));
             
             // Null checks
-            list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null attackerWithSpecialty", 5M, "DoubleDamage",
+            list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null attackerWithSpecialty", 4M, "DoubleDamage",
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ChangeDamageWhenAttacking", null, CreateCreaturesInBattleObject(type.Assembly), 0M)));
-            list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null defender", 5M, "DoubleDamage",
+            list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null defender", 4M, "DoubleDamage",
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ChangeDamageWhenAttacking", CreateCreaturesInBattleObject(type.Assembly), null, 0M)));
         }
 
@@ -116,13 +170,13 @@
             }));
 
             // Null checks
-            list.Add(new TypeTest("AddAttackWhenSkip ApplyOnSkip throws argument exception when given null skipCreature", 5M, "AddAttackWhenSkip",
+            list.Add(new TypeTest("AddAttackWhenSkip ApplyOnSkip throws argument exception when given null skipCreature", 4M, "AddAttackWhenSkip",
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ApplyOnSkip", new object[] { null })));
 
             // Validations
-            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given 0 attackToAdd", 1.5M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(0)));
-            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given -1 attackToAdd", 1M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(-1)));
-            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given 11 attackToAdd", 2M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(11)));
+            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given 0 attackToAdd", 2M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(0)));
+            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given -1 attackToAdd", 2M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(-1)));
+            list.Add(new TypeTest("AddAttackWhenSkip constructor throws an exception when given 11 attackToAdd", 4M, "AddAttackWhenSkip", type => type.ConstructorThrowsException(11)));
         }
 
         private void AddDoubleAttackWhenAttackingChecks(IList<ITest> list)
@@ -157,14 +211,14 @@
             }));
 
             // Null checks
-            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null attackerWithSpecialty", 5M, "DoubleAttackWhenAttacking",
+            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null attackerWithSpecialty", 4M, "DoubleAttackWhenAttacking",
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ApplyWhenAttacking", new object[] { null, CreateCreaturesInBattleObject(type.Assembly) })));
-            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null defender", 5M, "DoubleAttackWhenAttacking",
+            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null defender", 4M, "DoubleAttackWhenAttacking",
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ApplyWhenAttacking", new object[] { CreateCreaturesInBattleObject(type.Assembly), null })));
 
             // Validations
-            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given 0 rounds", 1.5M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(0)));
-            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given -1 rounds", 1M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(-1)));
+            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given 0 rounds", 2M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(0)));
+            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given -1 rounds", 2M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(-1)));
         }
 
         private void AddGoblinChecks(IList<ITest> list)
@@ -203,19 +257,19 @@
 
         private void AddBaseCreatureChecks(IList<ITest> list, string creatureName, int attack, int defense, int healthPoints, decimal damage, int specialtiesCount)
         {
-            // Total: 3 points
+            // Total: 2.8 points
             list.Add(new PredicateTest("Added class " + creatureName, 0.50M, assembly => assembly.GetTypes().Any(t => t.Name == creatureName)));
             list.Add(new PredicateTest(creatureName + " is a creature", 0.60M, assembly => assembly.GetTypes().Any(t => t.Name == creatureName && t.BaseType.Name == "Creature")));
-            list.Add(new TypeTest(creatureName + " has " + attack + " attack", 0.35M, creatureName, type => type.CheckPropertyValue("Attack", attack)));
-            list.Add(new TypeTest(creatureName + " has " + defense + " defense", 0.35M, creatureName, type => type.CheckPropertyValue("Defense", defense)));
-            list.Add(new TypeTest(creatureName + " has " + healthPoints + " health points", 0.35M, creatureName, type => type.CheckPropertyValue("HealthPoints", healthPoints)));
-            list.Add(new TypeTest(creatureName + " has " + damage + " damage", 0.35M, creatureName, type => type.CheckPropertyValue("Damage", damage)));
+            list.Add(new TypeTest(creatureName + " has " + attack + " attack", 0.3M, creatureName, type => type.CheckPropertyValue("Attack", attack)));
+            list.Add(new TypeTest(creatureName + " has " + defense + " defense", 0.3M, creatureName, type => type.CheckPropertyValue("Defense", defense)));
+            list.Add(new TypeTest(creatureName + " has " + healthPoints + " health points", 0.3M, creatureName, type => type.CheckPropertyValue("HealthPoints", healthPoints)));
+            list.Add(new TypeTest(creatureName + " has " + damage + " damage", 0.3M, creatureName, type => type.CheckPropertyValue("Damage", damage)));
             list.Add(new TypeTest(creatureName + " has " + specialtiesCount + " specialties", 0.50M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Count() == specialtiesCount)));
         }
 
         private void AddCheckIfCreatureHasSpecialty(IList<ITest> list, string creatureName, string specialtyName)
         {
-            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.75M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
+            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.5M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
         }
 
         private object CreateCreaturesInBattleObject(Assembly assembly, string creatureTypeName = "Angel")

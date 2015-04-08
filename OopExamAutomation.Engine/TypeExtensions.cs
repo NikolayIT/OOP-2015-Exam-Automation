@@ -29,7 +29,7 @@ namespace OopExamAutomation.Engine
             MethodInfo method = null;
             try
             {
-                method = type.GetMethod(methodName);
+                method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             }
             catch (AmbiguousMatchException)
             {
@@ -48,6 +48,10 @@ namespace OopExamAutomation.Engine
             catch (TargetInvocationException ex)
             {
                 return ex.InnerException is ArgumentException;
+            }
+            catch
+            {
+                return false;
             }
 
             return false;
