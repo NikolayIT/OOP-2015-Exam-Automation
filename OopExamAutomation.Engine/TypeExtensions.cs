@@ -26,7 +26,16 @@ namespace OopExamAutomation.Engine
                 return false;
             }
 
-            var method = type.GetMethod(methodName);
+            MethodInfo method = null;
+            try
+            {
+                method = type.GetMethod(methodName);
+            }
+            catch (AmbiguousMatchException)
+            {
+                return false;
+            }
+
             if (method == null)
             {
                 return false;
