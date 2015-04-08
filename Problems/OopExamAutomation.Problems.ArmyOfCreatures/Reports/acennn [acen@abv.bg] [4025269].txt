@@ -1,3 +1,0 @@
-Compilation failed!
-Compiled file is missing. Compiler output: C:\Users\nkostov\AppData\Local\Temp\4i0qvt3q.oqb\Cosmetics.sln.metaproj : error MSB3202: The project file "C:\Users\nkostov\AppData\Local\Temp\4i0qvt3q.oqb\Cosmetics\Cosmetics.csproj" was not found. [C:\Users\nkostov\AppData\Local\Temp\4i0qvt3q.oqb\Cosmetics.sln]
-

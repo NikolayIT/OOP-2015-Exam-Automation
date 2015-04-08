@@ -1,3 +1,0 @@
-Compilation failed!
-Compiled file is missing. Compiler output: Console\Program.cs(8,27): error CS0234: The type or namespace name 'Extended' does not exist in the namespace 'ArmyOfCreatures' (are you missing an assembly reference?) [C:\Users\nkostov\AppData\Local\Temp\jdhwxsiu.woo\Source\ArmyOfCreatures\ArmyOfCreatures.csproj]
-
