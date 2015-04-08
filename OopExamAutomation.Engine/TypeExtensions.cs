@@ -1,13 +1,55 @@
 ﻿using System;
+using System.Reflection;
 namespace OopExamAutomation.Engine
 {
     public static class TypeExtensions
     {
+        public static bool ConstructorThrowsException(this Type type, params object[] args)
+        {
+            try
+            {
+                var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+                Activator.CreateInstance(type, flags, null, args, null);
+            }
+            catch
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool MethodThrowsException(this Type type, object obj, string methodName, params object[] args)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var method = type.GetMethod(methodName);
+            if (methodName == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                method.Invoke(obj, args);
+            }
+            catch(Exception exception)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static object GetInstance(this Type type, params object[] args)
         {
             try
             {
-                return Activator.CreateInstance(type, args);
+                var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+                return Activator.CreateInstance(type, flags, null, args, null);
             }
             catch
             {
@@ -28,7 +70,7 @@ namespace OopExamAutomation.Engine
             }
         }
 
-        public static bool CheckMethodValue<T>(this Type type, object obj, string methodName, T expectedValue)
+        public static bool CheckMethodValue<T>(this Type type, object obj, string methodName, T expectedValue, params object[] args)
         {
             if (obj == null)
             {
@@ -44,9 +86,9 @@ namespace OopExamAutomation.Engine
             object result;
             try
             {
-                result = method.Invoke(obj, new object[0]);
+                result = method.Invoke(obj, args);
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
             }
