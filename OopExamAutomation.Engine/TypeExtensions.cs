@@ -27,7 +27,7 @@ namespace OopExamAutomation.Engine
             }
 
             var method = type.GetMethod(methodName);
-            if (methodName == null)
+            if (method == null)
             {
                 return false;
             }
@@ -78,6 +78,11 @@ namespace OopExamAutomation.Engine
                 method = type.GetMethod(methodName);
             }
             catch (AmbiguousMatchException)
+            {
+                return;
+            }
+
+            if (method == null)
             {
                 return;
             }

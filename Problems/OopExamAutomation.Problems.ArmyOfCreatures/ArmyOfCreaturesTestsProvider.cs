@@ -24,8 +24,19 @@
             AddDoubleAttackWhenAttackingChecks(list);
 
             AddWorkingWithThreeArmiesChecks(list);
+            AddFactoryChecks(list);
 
             return list;
+        }
+
+        private void AddWorkingWithThreeArmiesChecks(IList<ITest> list)
+        {
+            // TODO: Check working with 3 armies
+        }
+
+        private void AddFactoryChecks(IList<ITest> list)
+        {
+            // TODO: Check factory
         }
 
         private void AddDoubleDamageChecks(IList<ITest> list)
@@ -64,13 +75,6 @@
                 type => type.MethodThrowsArgumentException(type.GetInstance(5), "ChangeDamageWhenAttacking", CreateCreaturesInBattleObject(type.Assembly), null, 0M)));
         }
 
-        private object CreateCreaturesInBattleObject(Assembly assembly, string creatureTypeName = "Angel")
-        {
-            var creature = assembly.GetTypeByName(creatureTypeName).GetInstance();
-            var creaturesInBattle = assembly.GetTypeByName("CreaturesInBattle").GetInstance(creature, 1);
-            return creaturesInBattle;
-        }
-
         private void AddAttackWhenSkipChecks(IList<ITest> list)
         {
             // Common requirements
@@ -106,11 +110,6 @@
             // TODO: Check DoubleAttackWhenAttacking logic
             // TODO: Null checks
             // TODO: Check validations
-        }
-
-        private void AddWorkingWithThreeArmiesChecks(IList<ITest> list)
-        {
-            // TODO: Check Working with 3 armies
         }
 
         private void AddGoblinChecks(IList<ITest> list)
@@ -162,6 +161,13 @@
         private void AddCheckIfCreatureHasSpecialty(IList<ITest> list, string creatureName, string specialtyName)
         {
             list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.75M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
+        }
+
+        private object CreateCreaturesInBattleObject(Assembly assembly, string creatureTypeName = "Angel")
+        {
+            var creature = assembly.GetTypeByName(creatureTypeName).GetInstance();
+            var creaturesInBattle = assembly.GetTypeByName("CreaturesInBattle").GetInstance(creature, 1);
+            return creaturesInBattle;
         }
     }
 }
