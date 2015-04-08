@@ -257,19 +257,19 @@
 
         private void AddBaseCreatureChecks(IList<ITest> list, string creatureName, int attack, int defense, int healthPoints, decimal damage, int specialtiesCount)
         {
-            // Total: 2.8 points
-            list.Add(new PredicateTest("Added class " + creatureName, 0.50M, assembly => assembly.GetTypes().Any(t => t.Name == creatureName)));
+            // Total: 2.25 points
+            list.Add(new PredicateTest("Added class " + creatureName, 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == creatureName)));
             list.Add(new PredicateTest(creatureName + " is a creature", 0.60M, assembly => assembly.GetTypes().Any(t => t.Name == creatureName && t.BaseType.Name == "Creature")));
-            list.Add(new TypeTest(creatureName + " has " + attack + " attack", 0.3M, creatureName, type => type.CheckPropertyValue("Attack", attack)));
-            list.Add(new TypeTest(creatureName + " has " + defense + " defense", 0.3M, creatureName, type => type.CheckPropertyValue("Defense", defense)));
-            list.Add(new TypeTest(creatureName + " has " + healthPoints + " health points", 0.3M, creatureName, type => type.CheckPropertyValue("HealthPoints", healthPoints)));
-            list.Add(new TypeTest(creatureName + " has " + damage + " damage", 0.3M, creatureName, type => type.CheckPropertyValue("Damage", damage)));
-            list.Add(new TypeTest(creatureName + " has " + specialtiesCount + " specialties", 0.50M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Count() == specialtiesCount)));
+            list.Add(new TypeTest(creatureName + " has " + attack + " attack", 0.25M, creatureName, type => type.CheckPropertyValue("Attack", attack)));
+            list.Add(new TypeTest(creatureName + " has " + defense + " defense", 0.25M, creatureName, type => type.CheckPropertyValue("Defense", defense)));
+            list.Add(new TypeTest(creatureName + " has " + healthPoints + " health points", 0.25M, creatureName, type => type.CheckPropertyValue("HealthPoints", healthPoints)));
+            list.Add(new TypeTest(creatureName + " has " + damage + " damage", 0.25M, creatureName, type => type.CheckPropertyValue("Damage", damage)));
+            list.Add(new TypeTest(creatureName + " has " + specialtiesCount + " specialties", 0.40M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Count() == specialtiesCount)));
         }
 
         private void AddCheckIfCreatureHasSpecialty(IList<ITest> list, string creatureName, string specialtyName)
         {
-            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.5M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
+            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.25M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
         }
 
         private object CreateCreaturesInBattleObject(Assembly assembly, string creatureTypeName = "Angel")

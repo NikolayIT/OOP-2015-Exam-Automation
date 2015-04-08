@@ -78,9 +78,9 @@
                     }
                     else
                     {
-                        // No warnings? +5 points
-                        result.Points += 5;
-                        report.WriteLine("No warnings. +5 points.");
+                        // No warnings? +10 points
+                        result.Points += 10;
+                        report.WriteLine("No warnings. +10 points.");
                     }
 
                     report.WriteLine();
