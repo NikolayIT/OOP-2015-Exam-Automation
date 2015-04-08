@@ -19,7 +19,7 @@ namespace OopExamAutomation.Engine
             return false;
         }
 
-        public static bool MethodThrowsException(this Type type, object obj, string methodName, params object[] args)
+        public static bool MethodThrowsArgumentException(this Type type, object obj, string methodName, params object[] args)
         {
             if (obj == null)
             {
@@ -36,9 +36,9 @@ namespace OopExamAutomation.Engine
             {
                 method.Invoke(obj, args);
             }
-            catch(Exception exception)
+            catch (TargetInvocationException ex)
             {
-                return true;
+                return ex.InnerException is ArgumentException;
             }
 
             return false;
@@ -67,6 +67,28 @@ namespace OopExamAutomation.Engine
             catch
             {
                 return default(T);
+            }
+        }
+
+        public static void InvokeMethod(this Type type, object obj, string methodName, params object[] args)
+        {
+            MethodInfo method = null;
+            try
+            {
+                method = type.GetMethod(methodName);
+            }
+            catch (AmbiguousMatchException)
+            {
+                return;
+            }
+
+            try
+            {
+                method.Invoke(obj, args);
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
