@@ -45,7 +45,7 @@
             list.Add(new PredicateTest("Added class DoubleDamage", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "DoubleDamage")));
             list.Add(new TypeTest("Class DoubleDamage has only 1 constructor", 0.25M, "DoubleDamage", type => type.GetConstructors().Count() == 1));
             list.Add(new TypeTest("DoubleDamage constructor doesn't throw exception when rounds is 10", 0.25M, "DoubleDamage", type => !type.ConstructorThrowsException(10)));
-            list.Add(new TypeTest("Class DoubleDamage correct ToString() method", 1M, "DoubleDamage", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleDamage(10)")));
+            list.Add(new TypeTest("Class DoubleDamage has correct ToString() method", 1M, "DoubleDamage", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleDamage(10)")));
 
             // Logic
             list.Add(new TypeTest("DoubleDamage doubles the damage", 1.5M, "DoubleDamage", type =>
@@ -81,7 +81,7 @@
             list.Add(new PredicateTest("Added class AddAttackWhenSkip", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "AddAttackWhenSkip")));
             list.Add(new TypeTest("Class AddAttackWhenSkip has only 1 constructor", 0.25M, "AddAttackWhenSkip", type => type.GetConstructors().Count() == 1));
             list.Add(new TypeTest("AddAttackWhenSkip constructor doesn't throw exception when attackToAdd is 10", 0.25M, "AddAttackWhenSkip", type => !type.ConstructorThrowsException(10)));
-            list.Add(new TypeTest("Class AddAttackWhenSkip correct ToString() method", 1M, "AddAttackWhenSkip", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "AddAttackWhenSkip(10)")));
+            list.Add(new TypeTest("Class AddAttackWhenSkip has correct ToString() method", 1M, "AddAttackWhenSkip", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "AddAttackWhenSkip(10)")));
 
             // Check AddAttackWhenSkip logic
             list.Add(new TypeTest("AddAttackWhenSkip ApplyOnSkip adds attack", 1.5M, "AddAttackWhenSkip", type =>
@@ -104,12 +104,44 @@
 
         private void AddDoubleAttackWhenAttackingChecks(IList<ITest> list)
         {
+            // Common requirements
             list.Add(new PredicateTest("Added class DoubleAttackWhenAttacking", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "DoubleAttackWhenAttacking")));
             list.Add(new TypeTest("Class DoubleAttackWhenAttacking has only 1 constructor", 0.25M, "DoubleAttackWhenAttacking", type => type.GetConstructors().Count() == 1));
-            list.Add(new TypeTest("Class DoubleAttackWhenAttacking correct ToString() method", 1M, "DoubleAttackWhenAttacking", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleAttackWhenAttacking(10)")));
-            // TODO: Check DoubleAttackWhenAttacking logic
-            // TODO: Null checks
-            // TODO: Check validations
+            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor doesn't throw exception when rounds is 10", 0.25M, "DoubleAttackWhenAttacking", type => !type.ConstructorThrowsException(10)));
+            list.Add(new TypeTest("Class DoubleAttackWhenAttacking has correct ToString() method", 1M, "DoubleAttackWhenAttacking", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleAttackWhenAttacking(10)")));
+
+            // Check DoubleAttackWhenAttacking logic
+            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking doubles the attack", 1.5M, "DoubleAttackWhenAttacking", type =>
+            {
+                var obj = type.GetInstance(5);
+                var creaturesInBattle = CreateCreaturesInBattleObject(type.Assembly, "Angel");
+                type.InvokeMethod(obj, "ApplyWhenAttacking", creaturesInBattle, creaturesInBattle);
+                return creaturesInBattle.GetPropertyValue<int>("CurrentAttack").Equals(40);
+            }));
+            list.Add(new TypeTest("DoubleAttackWhenAttacking expires after few rounds", 1.5M, "DoubleAttackWhenAttacking", type =>
+            {
+                var obj = type.GetInstance(1);
+                var creaturesInBattle = CreateCreaturesInBattleObject(type.Assembly);
+                type.InvokeMethod(obj, "ApplyWhenAttacking", creaturesInBattle, creaturesInBattle);
+                if (!creaturesInBattle.GetPropertyValue<int>("CurrentAttack").Equals(40))
+                {
+                    return false;
+                }
+
+                creaturesInBattle = CreateCreaturesInBattleObject(type.Assembly);
+                type.InvokeMethod(obj, "ApplyWhenAttacking", creaturesInBattle, creaturesInBattle);
+                return creaturesInBattle.GetPropertyValue<int>("CurrentAttack").Equals(20);
+            }));
+
+            // Null checks
+            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null attackerWithSpecialty", 1M, "DoubleAttackWhenAttacking",
+                type => type.MethodThrowsArgumentException(type.GetInstance(5), "ApplyWhenAttacking", new object[] { null, CreateCreaturesInBattleObject(type.Assembly) })));
+            list.Add(new TypeTest("DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null defender", 1M, "DoubleAttackWhenAttacking",
+                type => type.MethodThrowsArgumentException(type.GetInstance(5), "ApplyWhenAttacking", new object[] { CreateCreaturesInBattleObject(type.Assembly), null })));
+
+            // Validations
+            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given 0 rounds", 1.5M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(0)));
+            list.Add(new TypeTest("DoubleAttackWhenAttacking constructor throws an exception when given -1 rounds", 1M, "DoubleAttackWhenAttacking", type => type.ConstructorThrowsException(-1)));
         }
 
         private void AddGoblinChecks(IList<ITest> list)

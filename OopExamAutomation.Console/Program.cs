@@ -75,7 +75,6 @@
                     {
                         report.WriteLine("Compiler comment:");
                         report.WriteLine(compileResult.CompilerComment);
-                        report.WriteLine();
                     }
                     else
                     {
@@ -83,6 +82,8 @@
                         result.Points += 5;
                         report.WriteLine("No warnings. +5 points.");
                     }
+
+                    report.WriteLine();
 
                     // var assembly = dom.Load(new AssemblyName { CodeBase = compileResult.OutputFile });
                     var assembly = Assembly.LoadFile(compileResult.OutputFile);
