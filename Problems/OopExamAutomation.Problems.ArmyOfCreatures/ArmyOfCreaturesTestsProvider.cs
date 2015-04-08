@@ -29,21 +29,30 @@
 
         private void AddDoubleDamageChecks(IList<ITest> list)
         {
-            // TODO: Check DoubleDamage
+            list.Add(new PredicateTest("Added class DoubleDamage", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "DoubleDamage")));
+            list.Add(new TypeTest("Class DoubleDamage has only 1 constructor", 0.25M, "DoubleDamage", type => type.GetConstructors().Count() == 1));
+            list.Add(new TypeTest("Class DoubleDamage correct ToString() method", 0.5M, "DoubleDamage", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleDamage(10)")));
+            // TODO: Check DoubleDamage logic
             // TODO: Null checks
             // TODO: Check validations
         }
 
         private void AddAttackWhenSkipChecks(IList<ITest> list)
         {
-            // TODO: Check AddAttackWhenSkip
+            list.Add(new PredicateTest("Added class AddAttackWhenSkip", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "AddAttackWhenSkip")));
+            list.Add(new TypeTest("Class AddAttackWhenSkip has only 1 constructor", 0.25M, "AddAttackWhenSkip", type => type.GetConstructors().Count() == 1));
+            list.Add(new TypeTest("Class AddAttackWhenSkip correct ToString() method", 0.5M, "AddAttackWhenSkip", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "AddAttackWhenSkip(10)")));
+            // TODO: Check AddAttackWhenSkip logic
             // TODO: Null checks
             // TODO: Check validations
         }
 
         private void AddDoubleAttackWhenAttackingChecks(IList<ITest> list)
         {
-            // TODO: Check DoubleAttackWhenAttacking
+            list.Add(new PredicateTest("Added class DoubleAttackWhenAttacking", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "DoubleAttackWhenAttacking")));
+            list.Add(new TypeTest("Class DoubleAttackWhenAttacking has only 1 constructor", 0.25M, "DoubleAttackWhenAttacking", type => type.GetConstructors().Count() == 1));
+            list.Add(new TypeTest("Class DoubleAttackWhenAttacking correct ToString() method", 0.5M, "DoubleAttackWhenAttacking", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleAttackWhenAttacking(10)")));
+            // TODO: Check DoubleAttackWhenAttacking logic
             // TODO: Null checks
             // TODO: Check validations
         }
@@ -101,7 +110,7 @@
 
         private void AddCheckIfCreatureHasSpecialty(IList<ITest> list, string creatureName, string specialtyName)
         {
-            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.50M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
+            list.Add(new TypeTest(creatureName + " has " + specialtyName, 0.75M, creatureName, type => type.CheckPropertyValue<IEnumerable<object>>("Specialties", v => v.Any(i => i.GetType().Name == specialtyName))));
         }
     }
 }

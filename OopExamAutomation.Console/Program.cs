@@ -45,7 +45,7 @@
         {
             TestSolutionResult result = new TestSolutionResult(new DirectoryInfo(directory).Name);
 
-            var solutionFilePath = Directory.GetFiles(directory).OrderByDescending(fileName => fileName.Length).FirstOrDefault(fileName => fileName.Contains(ProblemName));
+            var solutionFilePath = Directory.GetFiles(directory).OrderByDescending(fileName => fileName.Length).FirstOrDefault(fileName => fileName.Contains(ProblemName) && (fileName.EndsWith(".cs") || fileName.EndsWith(".zip")));
             if (solutionFilePath == null)
             {
                 result.Points = 0;

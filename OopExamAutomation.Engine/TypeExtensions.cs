@@ -3,11 +3,11 @@ namespace OopExamAutomation.Engine
 {
     public static class TypeExtensions
     {
-        public static object GetInstance(this Type type)
+        public static object GetInstance(this Type type, params object[] args)
         {
             try
             {
-                return Activator.CreateInstance(type);
+                return Activator.CreateInstance(type, args);
             }
             catch
             {
@@ -28,11 +28,42 @@ namespace OopExamAutomation.Engine
             }
         }
 
-        public static bool CheckPropertyValue<T>(this Type type, string propertyName, T value)
+        public static bool CheckMethodValue<T>(this Type type, object obj, string methodName, T expectedValue)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var method = type.GetMethod(methodName);
+            if (methodName == null)
+            {
+                return false;
+            }
+
+            object result;
+            try
+            {
+                result = method.Invoke(obj, new object[0]);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return result.Equals(expectedValue);
+        }
+
+        public static bool CheckPropertyValue<T>(this Type type, string propertyName, T expectedValue)
         {
             var obj = type.GetInstance();
             if (obj == null) return false;
-            return obj.GetPropertyValue<T>(propertyName).Equals(value);
+            return obj.GetPropertyValue<T>(propertyName).Equals(expectedValue);
         }
 
         public static bool CheckPropertyValue<T>(this Type type, string propertyName, Func<T, bool> checkValue)
