@@ -1,0 +1,91 @@
+No warnings. +10 points.
+
+Added class Goblin (0.25 points) - OK
+Goblin is a creature (0.60 points) - OK
+Goblin has 4 attack (0.25 points) - OK
+Goblin has 2 defense (0.25 points) - OK
+Goblin has 5 health points (0.25 points) - OK
+Goblin has 1.5 damage (0.25 points) - OK
+Goblin has 0 specialties (0.40 points) - OK
+Added class AncientBehemoth (0.25 points) - OK
+AncientBehemoth is a creature (0.60 points) - OK
+AncientBehemoth has 19 attack (0.25 points) - OK
+AncientBehemoth has 19 defense (0.25 points) - OK
+AncientBehemoth has 300 health points (0.25 points) - OK
+AncientBehemoth has 40 damage (0.25 points) - OK
+AncientBehemoth has 2 specialties (0.40 points) - OK
+AncientBehemoth has ReduceEnemyDefenseByPercentage (0.25 points) - OK
+AncientBehemoth has DoubleDefenseWhenDefending (0.25 points) - OK
+Added class WolfRaider (0.25 points) - OK
+WolfRaider is a creature (0.60 points) - OK
+WolfRaider has 8 attack (0.25 points) - OK
+WolfRaider has 5 defense (0.25 points) - OK
+WolfRaider has 10 health points (0.25 points) - OK
+WolfRaider has 3.5 damage (0.25 points) - OK
+WolfRaider has 1 specialties (0.40 points) - OK
+WolfRaider has DoubleDamage (0.25 points) - OK
+Added class Griffin (0.25 points) - OK
+Griffin is a creature (0.60 points) - OK
+Griffin has 8 attack (0.25 points) - OK
+Griffin has 8 defense (0.25 points) - OK
+Griffin has 25 health points (0.25 points) - OK
+Griffin has 4.5 damage (0.25 points) - OK
+Griffin has 3 specialties (0.40 points) - OK
+Griffin has DoubleDefenseWhenDefending (0.25 points) - OK
+Griffin has AddDefenseWhenSkip (0.25 points) - OK
+Griffin has Hate (0.25 points) - OK
+Added class CyclopsKing (0.25 points) - OK
+CyclopsKing is a creature (0.60 points) - OK
+CyclopsKing has 17 attack (0.25 points) - OK
+CyclopsKing has 13 defense (0.25 points) - OK
+CyclopsKing has 70 health points (0.25 points) - OK
+CyclopsKing has 18 damage (0.25 points) - OK
+CyclopsKing has 3 specialties (0.40 points) - OK
+CyclopsKing has AddAttackWhenSkip (0.25 points) - OK
+CyclopsKing has DoubleAttackWhenAttacking (0.25 points) - OK
+CyclopsKing has DoubleDamage (0.25 points) - OK
+Added class DoubleDamage (0.50 points) - OK
+Class DoubleDamage has only 1 constructor (0 points) - FAIL
+DoubleDamage constructor doesn't throw exception when rounds is 10 (0.25 points) - OK
+Class DoubleDamage has correct ToString() method (1 point) - OK
+DoubleDamage doubles the damage (0 points) - FAIL
+DoubleDamage expires after few rounds (1.5 points) - OK
+DoubleDamage constructor throws an exception when given 0 rounds (0 points) - FAIL
+DoubleDamage constructor throws an exception when given -1 rounds (0 points) - FAIL
+DoubleDamage constructor throws an exception when given 11 rounds (0 points) - FAIL
+DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null attackerWithSpecialty (4 points) - OK
+DoubleDamage ChangeDamageWhenAttacking throws argument exception when given null defender (4 points) - OK
+Added class AddAttackWhenSkip (0.50 points) - OK
+Class AddAttackWhenSkip has only 1 constructor (0.25 points) - OK
+AddAttackWhenSkip constructor doesn't throw exception when attackToAdd is 10 (0.25 points) - OK
+Class AddAttackWhenSkip has correct ToString() method (1 point) - OK
+AddAttackWhenSkip ApplyOnSkip adds attack (0 points) - FAIL
+AddAttackWhenSkip ApplyOnSkip throws argument exception when given null skipCreature (4 points) - OK
+AddAttackWhenSkip constructor throws an exception when given 0 attackToAdd (2 points) - OK
+AddAttackWhenSkip constructor throws an exception when given -1 attackToAdd (2 points) - OK
+AddAttackWhenSkip constructor throws an exception when given 11 attackToAdd (4 points) - OK
+Added class DoubleAttackWhenAttacking (0.50 points) - OK
+Class DoubleAttackWhenAttacking has only 1 constructor (0.25 points) - OK
+DoubleAttackWhenAttacking constructor doesn't throw exception when rounds is 10 (0.25 points) - OK
+Class DoubleAttackWhenAttacking has correct ToString() method (1 point) - OK
+DoubleAttackWhenAttacking ApplyWhenAttacking doubles the attack (0 points) - FAIL
+DoubleAttackWhenAttacking expires after few rounds (0 points) - FAIL
+DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null attackerWithSpecialty (0 points) - FAIL
+DoubleAttackWhenAttacking ApplyWhenAttacking throws argument exception when given null defender (0 points) - FAIL
+DoubleAttackWhenAttacking constructor throws an exception when given 0 rounds (2 points) - OK
+DoubleAttackWhenAttacking constructor throws an exception when given -1 rounds (2 points) - OK
+BattleManager is extended (0 points) - FAIL
+In extended BattleManager AddCreaturesByIdentifier throws exception when creatureIdentifier is null (0 points) - FAIL
+In extended BattleManager AddCreaturesByIdentifier throws exception when creaturesInBattle is null (0 points) - FAIL
+In extended BattleManager GetByIdentifier throws exception when identifier is null (0 points) - FAIL
+CreaturesFactory is extended (3 points) - OK
+CreaturesFactory CreateCreature throws exception when given invalid data (2 points) - OK
+CreaturesFactory CreateCreature works as expected (AncientBehemoth) (0.5 points) - OK
+CreaturesFactory CreateCreature works as expected (CyclopsKing) (0.5 points) - OK
+CreaturesFactory CreateCreature works as expected (Goblin) (0.5 points) - OK
+CreaturesFactory CreateCreature works as expected (Griffin) (0.5 points) - OK
+CreaturesFactory CreateCreature works as expected (WolfRaider) (0.5 points) - OK
+CreaturesFactory CreateCreature works as expected (Angel) (0.25 points) - OK
+CreaturesFactory CreateCreature works as expected (ArchDevil) (0.25 points) - OK
+
+Total points: 62.75
