@@ -30,10 +30,13 @@
 
         private void AddDoubleDamageChecks(IList<ITest> list)
         {
+            // Description requirements
             list.Add(new PredicateTest("Added class DoubleDamage", 0.25M, assembly => assembly.GetTypes().Any(t => t.Name == "DoubleDamage")));
             list.Add(new TypeTest("Class DoubleDamage has only 1 constructor", 0.25M, "DoubleDamage", type => type.GetConstructors().Count() == 1));
             list.Add(new TypeTest("DoubleDamage constructor doesn't throw exception when rounds is 10", 0.25M, "DoubleDamage", type => !type.ConstructorThrowsException(10)));
             list.Add(new TypeTest("Class DoubleDamage correct ToString() method", 1M, "DoubleDamage", type => type.CheckMethodValue(type.GetInstance(10), "ToString", "DoubleDamage(10)")));
+
+            // Logic
             list.Add(new PredicateTest("DoubleDamage doubles the damage", 1.5M, assembly =>
             {
                 var obj = assembly.GetTypeByName("DoubleDamage").GetInstance(2);
@@ -48,8 +51,12 @@
                 assembly.GetTypeByName("DoubleDamage").CheckMethodValue(obj, "ChangeDamageWhenAttacking", 100M, creaturesInBattle, creaturesInBattle, 50M);
                 return assembly.GetTypeByName("DoubleDamage").CheckMethodValue(obj, "ChangeDamageWhenAttacking", 50M, creaturesInBattle, creaturesInBattle, 50M);
             }));
+
+            // Validations
             list.Add(new TypeTest("DoubleDamage constructor throws an exception when given 0 rounds", 1.5M, "DoubleDamage", type => type.ConstructorThrowsException(0)));
             list.Add(new TypeTest("DoubleDamage constructor throws an exception when given -1 rounds", 1M, "DoubleDamage", type => type.ConstructorThrowsException(-1)));
+            
+            // Null checks
             list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws an exception when given null attackerWithSpecialty", 1M, "DoubleDamage",
                 type => type.MethodThrowsException(type.GetInstance(10), "ChangeDamageWhenAttacking", null, CreateCreaturesInBattleObject(type.Assembly), 0M)));
             list.Add(new TypeTest("DoubleDamage ChangeDamageWhenAttacking throws an exception when given null defender", 1M, "DoubleDamage",
