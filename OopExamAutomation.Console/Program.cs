@@ -77,14 +77,22 @@
                         report.WriteLine(compileResult.CompilerComment);
                         report.WriteLine();
                     }
+                    else
+                    {
+                        // No warnings? +5 points
+                        result.Points += 5;
+                        report.WriteLine("No warnings. +5 points.");
+                    }
 
                     // var assembly = dom.Load(new AssemblyName { CodeBase = compileResult.OutputFile });
                     var assembly = Assembly.LoadFile(compileResult.OutputFile);
 
                     var totalPoints = RunTests(tests, assembly, report);
+                    report.WriteLine();
 
                     result.Comment = string.Empty;
-                    result.Points = totalPoints;
+                    result.Points += totalPoints;
+                    report.WriteLine("Total points: " + result.Points);
 
                     return result;
                 }
