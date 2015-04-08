@@ -97,6 +97,36 @@ namespace OopExamAutomation.Engine
             }
         }
 
+        public static object GetMethodValue(this Type type, object obj, string methodName, params object[] args)
+        {
+            MethodInfo method = null;
+            try
+            {
+                method = type.GetMethod(methodName);
+            }
+            catch (AmbiguousMatchException)
+            {
+                return null;
+            }
+
+            if (method == null)
+            {
+                return null;
+            }
+
+            object val = null;
+            try
+            {
+                val = method.Invoke(obj, args);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return val;
+        }
+
         public static bool CheckMethodValue<T>(this Type type, object obj, string methodName, T expectedValue, params object[] args)
         {
             if (obj == null)

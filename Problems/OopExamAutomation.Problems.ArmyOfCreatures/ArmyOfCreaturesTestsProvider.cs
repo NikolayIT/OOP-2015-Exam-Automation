@@ -36,7 +36,42 @@
 
         private void AddFactoryChecks(IList<ITest> list)
         {
-            // TODO: Check factory
+            list.Add(new PredicateTest("CreaturesFactory is extended", 2M, assembly => assembly.GetTypes().Any(type => type.BaseType != null && type.BaseType.Name == "CreaturesFactory")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature throws exception when given invalid data", 2M, assembly =>
+            {
+                var type = assembly.GetTypes().FirstOrDefault(t => t.BaseType != null && t.BaseType.Name == "CreaturesFactory");
+                if (type == null)
+                {
+                    return false;
+                }
+
+                return type.MethodThrowsArgumentException(type.GetInstance(), "CreateCreature", "Invalid");
+            }));
+
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (AncientBehemoth)", 0.5M, assembly => CheckCreateCreatureMethod(assembly, "AncientBehemoth")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (CyclopsKing)", 0.5M, assembly => CheckCreateCreatureMethod(assembly, "CyclopsKing")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (Goblin)", 0.5M, assembly => CheckCreateCreatureMethod(assembly, "Goblin")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (Griffin)", 0.5M, assembly => CheckCreateCreatureMethod(assembly, "Griffin")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (WolfRaider)", 0.5M, assembly => CheckCreateCreatureMethod(assembly, "WolfRaider")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (Angel)", 0.25M, assembly => CheckCreateCreatureMethod(assembly, "Angel")));
+            list.Add(new PredicateTest("CreaturesFactory CreateCreature works as expected (ArchDevil)", 0.25M, assembly => CheckCreateCreatureMethod(assembly, "ArchDevil")));
+        }
+
+        private bool CheckCreateCreatureMethod(Assembly assembly, string typeName)
+        {
+            var type = assembly.GetTypes().FirstOrDefault(t => t.BaseType != null && t.BaseType.Name == "CreaturesFactory");
+            if (type == null)
+            {
+                return false;
+            }
+
+            var result = type.GetMethodValue(type.GetInstance(), "CreateCreature", typeName);
+            if (result == null)
+            {
+                return false;
+            }
+
+            return result.GetType().Name == typeName;
         }
 
         private void AddDoubleDamageChecks(IList<ITest> list)
