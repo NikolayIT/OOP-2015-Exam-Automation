@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},\"{4}\"",
+            return string.Format("{3:00.00},{0},{2},\"{4}\"",
                 this.UserName,
                 this.Email,
                 this.StudentsNumber,

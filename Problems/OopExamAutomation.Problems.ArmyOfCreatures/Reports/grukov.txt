@@ -1,0 +1,3 @@
+Compilation failed!
+Compiled file is missing. Compiler output: Logic\Specialties\DoubleDamage.cs(34,33): error CS0115: 'ArmyOfCreatures.Logic.Specialties.DoubleDamage.ChangeDamageWhenAttacking(int)': no suitable method found to override [C:\Users\nkostov\AppData\Local\Temp\3my4beof.rxf\ArmyOfCreatures\ArmyOfCreatures.csproj]
+

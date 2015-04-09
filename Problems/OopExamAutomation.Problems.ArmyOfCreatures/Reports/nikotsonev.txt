@@ -1,0 +1,3 @@
+Compilation failed!
+Compiled file is missing. Compiler output: c:\Temp\OOP\Solutions\nikotsonev [kambocha7@gmail.com] [8017216]\2. Army of Creatures.cs.cs(1,1): error CS0116: A namespace cannot directly contain members such as fields or methods
+

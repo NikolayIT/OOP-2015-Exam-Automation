@@ -1,0 +1,34 @@
+Added class Category (2 points) - OK
+Category has private set Name (0 points) - FAIL
+Category Name cannot be null (1 point) - OK
+Category Name cannot be less than 2 symbols (1 point) - OK
+Category Name cannot be more than 15 symbols (1 point) - OK
+Category cannot add null cosmetics (1 point) - OK
+Category cannot remove null cosmetics (1 point) - OK
+Added class Product (2 points) - OK
+Class Product is abstract (0 points) - FAIL
+Product has private set Name (0 points) - FAIL
+Product Name cannot be null (1 point) - OK
+Product Name cannot be less than 3 symbols (1 point) - OK
+Product Name cannot be more than 10 symbols (1 point) - OK
+Product has private set Brand (0 points) - FAIL
+Product Brand cannot be null (1 point) - OK
+Product Brand cannot be less than 2 symbols (1 point) - OK
+Product Brand cannot be more than 10 symbols (1 point) - OK
+Product has non public set Price (0 points) - FAIL
+Product has non public set Gender (0 points) - FAIL
+Added class Shampoo (2 points) - OK
+Class Shampoo inherits abstract IProduct (0 points) - FAIL
+Class Shampoo invokes base constructor (0 points) - FAIL
+Product has private set Milliliters (0 points) - FAIL
+Product has private set Usage (0 points) - FAIL
+Added class Toothpaste (2 points) - OK
+Class Toothpaste inherits abstract IProduct (0 points) - FAIL
+Class Toothpaste invokes base constructor (0 points) - FAIL
+Class Toothpaste ingridients cannot be less than 4 symbols (2 points) - OK
+Class Toothpaste ingridients cannot be more than 12 symbols (2 points) - OK
+Added class ShoppingCart (2 points) - OK
+ShoppingCart cannot add null cosmetics (1 point) - OK
+ShoppingCart cannot remove null cosmetics (1 point) - OK
+
+Total points: 54

@@ -45,7 +45,7 @@
         {
             TestSolutionResult result = new TestSolutionResult(new DirectoryInfo(directory).Name);
 
-            var solutionFilePath = Directory.GetFiles(directory).OrderByDescending(fileName => fileName.Length).FirstOrDefault(fileName => fileName.Contains(ProblemName));
+            var solutionFilePath = Directory.GetFiles(directory).OrderByDescending(fileName => fileName.Length).FirstOrDefault(fileName => fileName.Contains(ProblemName) && (fileName.EndsWith(".cs") || fileName.EndsWith(".zip")));
             if (solutionFilePath == null)
             {
                 result.Points = 0;
@@ -75,16 +75,25 @@
                     {
                         report.WriteLine("Compiler comment:");
                         report.WriteLine(compileResult.CompilerComment);
-                        report.WriteLine();
                     }
+                    else
+                    {
+                        // No warnings? +10 points
+                        result.Points += 10;
+                        report.WriteLine("No warnings. +10 points.");
+                    }
+
+                    report.WriteLine();
 
                     // var assembly = dom.Load(new AssemblyName { CodeBase = compileResult.OutputFile });
                     var assembly = Assembly.LoadFile(compileResult.OutputFile);
 
                     var totalPoints = RunTests(tests, assembly, report);
+                    report.WriteLine();
 
                     result.Comment = string.Empty;
-                    result.Points = totalPoints;
+                    result.Points += totalPoints;
+                    report.WriteLine("Total points: " + result.Points);
 
                     return result;
                 }
